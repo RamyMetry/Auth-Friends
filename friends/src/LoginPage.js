@@ -1,6 +1,5 @@
 import React,{useState} from "react";
-// import api from "./utils/api"
-import axios from "axios"
+import api from "./utils/api"
 
 
 function Login(props){
@@ -18,11 +17,10 @@ function Login(props){
     }
 
     const handleSubmit=(event)=>{
-        event.prventDefault()
-        axios.post("http://localhost:5000/api/login",data)
+        event.preventDefault()
+        api().post("/api/login",data)
         .then(res=>{
-            console.log(res)
-            localStorage.setItem("token",res.data.token)
+            localStorage.setItem("token",res.data.payload)
             props.history.push("/friends")
         })
         .catch(err=>{
@@ -37,9 +35,6 @@ return <form onSubmit={handleSubmit}>
     <input type="password" name="password" placeholder="Password" value={data.password} onChange={handleChange}/>
     <button type="submit">Sign In</button>
 </form> 
-    
-
-
 }
 
 export default Login;
